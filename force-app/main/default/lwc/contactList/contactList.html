@@ -1,0 +1,75 @@
+<template>
+
+  <div class="slds-grid">
+    <div class="slds-p-around_medium lgc-bg slds-size_12-of-12">
+
+      <lightning-card>
+        <lightning-card class="slds-p-around_medium">
+          <h3 slot="title">
+            <lightning-icon class="slds-m-right_x-small" icon-name="standard:account"></lightning-icon>
+            Search Contacts
+          </h3>
+
+          <lightning-input name="enter-search" label=" " type="search" placeholder="Search Account..."
+            onchange={searchHandler}></lightning-input>
+
+          <lightning-button variant="Success" label="New" title="New" onclick={toggleNewForm}>
+          </lightning-button>
+          <lightning-button variant="Neutral" label="Search" title="Search" onclick={getData}>
+          </lightning-button>
+
+          <template if:true={showNewForm}>
+            <div class="slds-grid slds-wrap">
+              <div class="slds-p-around_medium lgc-bg slds-size_6-of-12">
+                <lightning-input type="text" label="FirstName" onchange={handleFieldChange}
+                  value={newContact.firstName}>
+                </lightning-input>
+              </div>
+              <div class="slds-p-around_medium lgc-bg slds-size_6-of-12">
+                <lightning-input type="text" label="LastName" onchange={handleFieldChange} value={newContact.lastName}>
+                </lightning-input>
+              </div>
+              <div class="slds-p-around_medium lgc-bg slds-size_4-of-12">
+                <lightning-input type="text" label="Role" onchange={handleFieldChange} value={newContact.role}>
+                </lightning-input>
+              </div>
+              <div class="slds-p-around_medium lgc-bg slds-size_4-of-12">
+                <lightning-input type="text" label="Phone" onchange={handleFieldChange} value={newContact.phone}>
+                </lightning-input>
+              </div>
+              <div class="slds-p-around_medium lgc-bg slds-size_4-of-12">
+                <lightning-input type="text" label="Email" onchange={handleFieldChange} value={newContact.email}>
+                </lightning-input>
+              </div>
+              <lightning-button variant="Success" label="Save" title="Save" onclick={createNewContact}>
+              </lightning-button>
+            </div>
+          </template>
+        </lightning-card>
+
+        <div class="slds-grid">
+          <div class="slds-p-around_medium lgc-bg slds-size_8-of-12">
+            <lightning-datatable key-field="id" data={contacts} columns={columns} onrowselection={showData}
+              max-row-selection=1>
+            </lightning-datatable>
+          </div>
+          <template if:true={selected}>
+            <div class="slds-p-around_medium lgc-bg slds-size_4-of-12">
+              <div class="slds-size_3-of-4">
+                <div class="slds-box slds-box_x-small slds-text-align_center slds-m-around_x-small"
+                  onclick={navigateToRecordEditPage}>
+                  <lightning-carousel>
+                    <lightning-carousel-image src={profile.Photo} header={profile.Name}
+                      description={profile.Description} alternative-text="Contact Profile." href={url}>
+                    </lightning-carousel-image>
+                  </lightning-carousel>
+                </div>
+              </div>
+            </div>
+          </template>
+        </div>
+
+      </lightning-card>
+    </div>
+  </div>
+</template>
